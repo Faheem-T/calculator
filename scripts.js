@@ -36,7 +36,7 @@ const row = document.createElement("div");
 row.setAttribute("class", "row");
 container.appendChild(row);
 const display = document.createElement("label");
-display.textContent = "124";
+// display.textContent = "124";
 row.appendChild(display);
 
 // Adding the buttons
@@ -48,7 +48,25 @@ for (buttons of buttonList) {
     for (buttonItem of buttons) {
         const button = document.createElement("button");
         button.textContent = buttonItem;
+        if ("+-*/".includes(buttonItem)) {
+            button.setAttribute("class", "btn operator");
+        } else if (!"=Clear".includes(buttonItem)) {
+            button.setAttribute("class", "btn");
+        }
+        button.setAttribute("id", buttonItem);
         
         row.appendChild(button);
     }
 }
+
+// Logic to make the buttons text appear inside display
+// (making use of event delegation here)
+container.addEventListener("click", (event) => {
+    const buttonValue = event.target.attributes.class.value;
+    if (buttonValue == "btn") {
+        display.textContent += event.target.textContent;
+    } else if (buttonValue == "btn operator") { // Adding spaces around operators like so "x + y"
+        display.textContent += ` ${event.target.textContent} `;
+    }
+});
+

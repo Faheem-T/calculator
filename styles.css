@@ -10,11 +10,14 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    width: 60%;
+    margin: auto;
+    /* padding: 20rem; */
 }
 
 .row {
     display: flex;
-    width: 40%;
+    width: 100%;
 }
 
 .row label {
@@ -28,5 +31,12 @@
     flex: 1;
     font-size: 2rem;
     padding: 1em;
+}
+
+@media (max-width: 800px) {
+    .row button {
+        font-size: 1.5rem;
+    }
+
 }
 
