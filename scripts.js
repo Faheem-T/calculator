@@ -1,15 +1,12 @@
 function add(x, y) {
     return x + y;
 }
-
 function subtract(x, y) {
     return x - y;
 }
-
 function multiply(x, y) {
     return x * y;
 }
-
 function divide(x, y) {
     return x / y;
 }
@@ -41,8 +38,9 @@ row.appendChild(display);
 
 // global variables
 let operator = null;
-let firstNum = null;
+let storedNum = null;
 let operatorPressed = false;
+
 // Adding the buttons
 for (buttons of buttonList) {
     const row = document.createElement("div");
@@ -54,7 +52,6 @@ for (buttons of buttonList) {
         button.textContent = buttonItem;
         if ("+-*/".includes(buttonItem)) {
             button.setAttribute("class", "btn operator");
-            // Event listener to update the global "operator" variable on click
             button.addEventListener("click", operatorFunction);
         } else if (!"Clear=".includes(buttonItem)) {
             button.setAttribute("class", "btn");
@@ -70,14 +67,18 @@ for (buttons of buttonList) {
 function operatorFunction(event) {
     // Not doing calculation if the last button pressed was an operator
     if (!operatorPressed) {
-        // if firstNum != null --> an operator was clicked before this operator click
-        // then firstNumber = operate(operator, firstNumber, secondNumber)
+        // if storedNum != null --> an operator was clicked before this operator click
+        // then storedNumber = operate(operator, storedNumber, secondNumber)
+        //
+        // secondNumber will be the number that is currently displayed:
         // secondNumber = +display.textContent
-        if (firstNum !== null) {
-            firstNum = operate(operator, firstNum, +display.textContent);
-            display.textContent = firstNum;
+        if (storedNum !== null) {
+            storedNum = operate(operator, storedNum, +display.textContent);
+            // removing excess digits after decimal
+            storedNum = Math.floor(storedNum * 100000) / 100000;
+            display.textContent = storedNum;
         } else {
-            firstNum = +display.textContent;
+            storedNum = +display.textContent;
         }
     }
 
@@ -110,4 +111,14 @@ equal.addEventListener("click", (event) => {
         operatorFunction(event);
     }
 });
+
+const clear = document.querySelector("#Clear");
+// resetting all globals on "clear" click
+// also resetting display
+clear.addEventListener("click", () => {
+    operator = null;
+    storedNum = null;
+    operatorPressed = false;
+    display.textContent = "";
+})
 
