@@ -28,8 +28,18 @@ function operate(operator, x, y) {
 }
 
 // Creating the buttons inside .container
-const buttonList = [[1, 2, 3, "+"], [4, 5, 6, "-"], [7, 8, 9, "*"], [0, ".", "=", "/"]];
+const buttonList = [[1, 2, 3, "+"], [4, 5, 6, "-"], [7, 8, 9, "*"], [0, ".", "=", "/"], ["Clear"]];
 const container = document.querySelector(".container");
+
+// Adding the display
+const row = document.createElement("div");
+row.setAttribute("class", "row");
+container.appendChild(row);
+const display = document.createElement("label");
+display.textContent = "124";
+row.appendChild(display);
+
+// Adding the buttons
 for (buttons of buttonList) {
     const row = document.createElement("div");
     row.setAttribute("class", "row");
